@@ -7,7 +7,7 @@ import os
 import kannel_util
 
 def make_names(id, admin_id):
-    return (admin_id or id, 
+    return (admin_id or id,
             "%s / %s" % (id, admin_id) if admin_id and admin_id != id else id)
 
 def print_config():
@@ -60,8 +60,8 @@ def print_data():
         (name, full_name) = make_names(smsc['id'], smsc.get('admin_id'))
 
         print "multigraph kannel_sms.%s" % name
-        print "in.value %s" % smsc['received']['sms']
-        print "out.value %s" % smsc['sent']['sms']
+        print "in.value %s" % smsc['received']
+        print "out.value %s" % smsc['sent']
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "config":

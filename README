@@ -1,4 +1,9 @@
-Munin plugins to monitor Kannel. 
+Original Branch by pingw33n (https://github.com/pingw33n)
+Forked by mobiletulip (https://github.com/mobiletulip) to
+	make compatible with Kannel 1.4.3
+----------------------------------------------------------
+
+Munin plugins to monitor Kannel.
 
 Plugins included:
 
