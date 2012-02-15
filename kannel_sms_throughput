@@ -12,7 +12,7 @@ def make_names(id, admin_id):
 
 def print_config():
 	print "graph_order in out"
-	print "graph_title Kannel SMS throughput (2)"
+	print "graph_title Kannel SMS throughput (total)"
 	print "graph_vlabel messages received (-) / sent (+) per ${graph_period}"
 	print "graph_category kannel"
 	print "graph_info This graph shows inbound and outbound SMS throughput"
