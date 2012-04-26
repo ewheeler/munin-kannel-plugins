@@ -14,7 +14,6 @@ def print_config():
     print "graph_category kannel"
     print "graph_info This graph shows inbound and outbound DLR throughput"
 
-    print "in.label received"
     print "in.type DERIVE"
     print "in.graph no"
     print "in.min 0"

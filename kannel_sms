@@ -60,8 +60,8 @@ def print_data():
         (name, full_name) = make_names(smsc['id'], smsc.get('admin_id'))
 
         print "multigraph kannel_sms.%s" % name
-        print "in.value %s" % smsc['received']
-        print "out.value %s" % smsc['sent']
+        print "in.value %s" % smsc['received']['sms']
+        print "out.value %s" % smsc['sent']['sms']
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "config":

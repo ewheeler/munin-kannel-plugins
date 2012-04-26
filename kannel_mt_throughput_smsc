@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+import urllib2
+from xml.etree.ElementTree import XML
+import sys
+import os
+
+import kannel_util
+
+def make_names(id, admin_id):
+    return (admin_id or id,
+            "%s / %s" % (id, admin_id) if admin_id and admin_id != id else id)
+
+def print_config():
+    print "multigraph kannel_mt_throughput_smsc"
+    print "graph_order dlr sms"
+    print "graph_title Kannel SMS throughput per SMSC"
+    print "graph_vlabel SMS sent (+) / DLRs received (-) per ${graph_period}"
+    print "graph_category kannel"
+    print "graph_info This graph shows outbound SMS and inbound DLR throughput per SMSC"
+
+    print "dlr.type DERIVE"
+    print "dlr.graph no"
+    print "dlr.min 0"
+
+    print "sms.label Traffic"
+    print "sms.type DERIVE"
+    print "sms.negative dlr"
+    print "sms.min 0"
+
+    status = kannel_util.get_status()
+    for smsc in status['smscs']:
+        (name, full_name) = make_names(smsc['id'], smsc.get('admin_id'))
+
+        print "multigraph kannel_mt_throughput_smsc.%s" % name
+        print "graph_order dlr sms"
+        print "graph_title Kannel SMS throughput for '%s' SMSC" % full_name
+        print "graph_vlabel SMS sent (+) / DLRs received (-) per ${graph_period}"
+        print "graph_category kannel"
+        print "graph_info This graph shows outbound SMS and inbound DLR throughput for '%s'" % full_name
+
+        print "dlr.type DERIVE"
+        print "dlr.graph no"
+        print "dlr.min 0"
+
+        print "sms.label Traffic"
+        print "sms.type DERIVE"
+        print "sms.negative dlr"
+        print "sms.min 0"
+
+def print_data():
+    status = kannel_util.get_status()
+
+    print "multigraph kannel_mt_throughput_smsc"
+    print "dlr.value " + str(status['dlr']['received']['total'])
+    print "sms.value " + str(status['sms']['sent']['total'])
+
+    for smsc in status['smscs']:
+        (name, full_name) = make_names(smsc['id'], smsc.get('admin_id'))
+
+        print "multigraph kannel_mt_throughput_smsc.%s" % name
+        print "dlr.value %s" % smsc['received']['dlr']
+        print "sms.value %s" % smsc['sent']['sms']
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] == "config":
+        print_config()
+    else:
+        print_data()

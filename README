@@ -1,13 +1,17 @@
 Original Branch by pingw33n (https://github.com/pingw33n)
-Forked by mobiletulip (https://github.com/mobiletulip) to
-	make compatible with Kannel 1.4.3
+Forked by mobiletulip (https://github.com/mobiletulip)
 ----------------------------------------------------------
 
-Munin plugins to monitor Kannel.
+Munin plugins to monitor Kannel 1.5 and higher / revision 4864 and higher
 
 Plugins included:
 
 - SMS throughput (sent/received message rate)
+  - Overall
+  - Per SMSC (Munin 1.4 and higher)
+- Outgoing (MT-traffic) throughput (sent message/received dlr rate)
+  - Overall
+  - Per SMSC (Munin 1.4 and higher)
 - SMS store size
 - SMS queue size
 - DLR throughput (sent/received DLR rate)

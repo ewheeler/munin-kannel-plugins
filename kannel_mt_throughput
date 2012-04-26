@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+import urllib2
+from xml.etree.ElementTree import XML
+import sys
+import os
+
+import kannel_util
+
+def print_config():
+    print "graph_order dlr sms"
+    print "graph_title Kannel throughput (outgoing traffic)"
+    print "graph_args --base 1000"
+    print "graph_vlabel SMS sent (+) / DLRs received (-) per ${graph_period}"
+    print "graph_category kannel"
+    print "graph_info This graph shows outbound SMS and inbound DLR throughput"
+
+    print "dlr.type DERIVE"
+    print "dlr.graph no"
+    print "dlr.min 0"
+
+    print "sms.label Traffic"
+    print "sms.type DERIVE"
+    print "sms.negative dlr"
+    print "sms.min 0"
+
+def print_data():
+    status = kannel_util.get_status()
+
+    print "dlr.value " + str(status['dlr']['received']['total'])
+    print "sms.value " + str(status['sms']['sent']['total'])
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] == "config":
+        print_config()
+    else:
+        print_data()

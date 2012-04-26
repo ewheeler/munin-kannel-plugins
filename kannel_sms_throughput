@@ -17,12 +17,11 @@ def print_config():
 	print "graph_category kannel"
 	print "graph_info This graph shows inbound and outbound SMS throughput"
 
-	print "in.label Total received"
 	print "in.type DERIVE"
 	print "in.graph no"
 	print "in.min 0"
 
-	print "out.label Total sent"
+	print "out.label SMS rate"
 	print "out.type DERIVE"
 	print "out.negative in"
 	print "out.min 0"
