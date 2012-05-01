@@ -18,6 +18,7 @@ def print_config():
     print "graph_category kannel"
     print "graph_info This graph shows outbound SMS and inbound DLR throughput per SMSC"
 
+    print "dlr.label DLR rate"
     print "dlr.type DERIVE"
     print "dlr.graph no"
     print "dlr.min 0"
