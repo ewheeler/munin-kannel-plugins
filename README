@@ -1,5 +1,6 @@
 Original Branch by pingw33n (https://github.com/pingw33n)
 Forked by mobiletulip (https://github.com/mobiletulip)
+and also ewheeler (https://github.com/ewheeler)
 ----------------------------------------------------------
 
 Munin plugins to monitor Kannel 1.5 and higher / revision 4864 and higher
@@ -18,6 +19,9 @@ Plugins included:
 - DLR queue size
 
 Configuration:
+Add the following to your `munin-node` file in `plugin-conf.d`
+or copy the included `munin-node` file to `plugin-conf.d` if this
+is the only plugin you are using.
 
 [kannel_*]
 user nobody
