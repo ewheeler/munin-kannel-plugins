@@ -2,7 +2,8 @@ import urllib2
 from xml.etree.ElementTree import XML
 import os
 
-def get_status(url = os.environ['STATUS_URL']):
+
+def get_status(url = os.environ['STATUS_URL'], no_dlr = os.environ['NO_DLR']):
     response = urllib2.urlopen(url)
     try:
         xml = XML(response.read())
@@ -21,28 +22,44 @@ def get_status(url = os.environ['STATUS_URL']):
 
     el = xml.find('dlr')
     result_d = result['dlr'] = {}
-    result_d['received'] = {'total': int(el.findtext('received/total'))}
-    result_d['sent'] = {'total': int(el.findtext('sent/total'))}
+    if not no_dlr:
+        result_d['received'] = {'total': int(el.findtext('received/total'))}
+        result_d['sent'] = {'total': int(el.findtext('sent/total'))}
 
     result_d['queued'] = int(el.findtext('queued'))
 
     els = xml.find('smscs').findall('smsc')
     result_d = result['smscs'] = []
     for el in els:
-        result_d.append({
-            'id': el.findtext('id'),
-            'admin_id': el.findtext('admin-id'),
-            'received': {
-                'sms': int(el.findtext('sms/received')),
-                'dlr': int(el.findtext('dlr/received'))
-            },
-            'sent': {
-                'sms': int(el.findtext('sms/sent')),
-                'dlr': int(el.findtext('dlr/sent'))
-            },
-            'failed' : int(el.findtext('failed')),
-            'queued' : int(el.findtext('queued')),
-            'status' : el.findtext('status').split(' ', 2)[0]
-        })
+        if not no_dlr:
+            result_d.append({
+                'id': el.findtext('id'),
+                'admin_id': el.findtext('admin-id'),
+                'received': {
+                    'sms': int(el.findtext('sms/received')),
+                    'dlr': int(el.findtext('dlr/received'))
+                },
+                'sent': {
+                    'sms': int(el.findtext('sms/sent')),
+                    'dlr': int(el.findtext('dlr/sent'))
+                },
+                'failed' : int(el.findtext('failed')),
+                'queued' : int(el.findtext('queued')),
+                'status' : el.findtext('status').split(' ', 2)[0]
+            })
+        else:
+            result_d.append({
+                'id': el.findtext('id'),
+                'admin_id': el.findtext('admin-id'),
+                'received': {
+                    'sms': int(el.findtext('received')),
+                },
+                'sent': {
+                    'sms': int(el.findtext('sent')),
+                },
+                'failed' : int(el.findtext('failed')),
+                'queued' : int(el.findtext('queued')),
+                'status' : el.findtext('status').split(' ', 2)[0]
+            })
 
     return result

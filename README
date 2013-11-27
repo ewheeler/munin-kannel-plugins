@@ -22,3 +22,4 @@ Configuration:
 [kannel_*]
 user nobody
 env.STATUS_URL http://localhost:13000/status.xml
+env.NO_DLR True
